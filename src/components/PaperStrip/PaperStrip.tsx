@@ -26,7 +26,7 @@ export const PaperStrip: React.FC<PaperStripProps> = ({
   onClick,
   showHint = false,
 }) => {
-  const [foldStep, setFoldStep] = useState(0);
+  const [foldStep, setFoldStep] = useState(() => isFolded ? FOLD_STEPS : 0);
   const [isAnimating, setIsAnimating] = useState(false);
   const timeoutsRef = useRef<number[]>([]);
   const onFoldCompleteRef = useRef(onFoldComplete);
@@ -116,6 +116,21 @@ export const PaperStrip: React.FC<PaperStripProps> = ({
               placeholder="写下你想说的悄悄话..."
               onClick={(e) => e.stopPropagation()}
             />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (foldStep === 0 && !isFolded) {
+    return (
+      <div 
+        className={`paper-container ${isFolded ? 'is-folded' : ''}`}
+        onClick={handleClick}
+      >
+        <div className="paper-display-layer">
+          <div className="paper-base">
+            <div className="paper-text">{text}</div>
           </div>
         </div>
       </div>
